@@ -1,7 +1,7 @@
 <template>
     <main id="home-page" class="ts-container">
         <header class="header">
-            <h1>Rails API</h1>
+            <h1>Books API</h1>
             <button class="ts-button" v-on:click="open_modal">Create book</button>
             <form-modal
                 method="POST"

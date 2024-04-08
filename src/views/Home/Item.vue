@@ -1,7 +1,9 @@
 <template>
     <article class="table-item ts-box">
         <section class="title ts-content is-dense">
-            <h2>{{ book }}</h2>
+            <h2>
+                <router-link v-bind:to="`/book/${isbn}`">{{ book }}</router-link>
+            </h2>
         </section>
         <section class="ts-content">
             <a v-bind:href="get_book_link(isbn)" target="_blank">
@@ -13,6 +15,7 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { RouterLink } from "vue-router";
 
 defineProps([
     "isbn",

@@ -10,25 +10,24 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
+import { GetBookItem } from "../../api/index.js";
 
 const route = useRoute();
 
 const isbn = computed(() => route.params.isbn);
 
 const ajax_modules = () => {
-    const api_host = computed( () => import.meta.env.VITE_API_HOST );
-    const list = ref({});
-    const get_book = () => {
-        const api = api_host.value + "/books/" + isbn.value;
-        const ajax = fetch(api).then(r=>r.json());
+    const item = ref({});
+    const get_book = (isbn = "") => {
+        const ajax = GetBookItem(isbn);
         ajax.then( (response = { result: {} }) => {
-            list.value = response.result;
+            item.value = response.result;
         });
     };
-    return { list, get_book };
+    return { item, get_book };
 };
-const { list, get_book } = ajax_modules();
+const { item, get_book } = ajax_modules();
 
-get_book();
+get_book(isbn.value);
 </script>

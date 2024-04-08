@@ -19,19 +19,18 @@ export default { name: "Home" };
 </script>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
+// APIs
+import { GetBookList } from "../../api/index";
 // Components
 import TableItem from "./Item.vue";
 import FormModal from "../../components/ModalForm.vue";
 
 const ajax_modules = () => {
-    const api_host = computed( () => import.meta.env.VITE_API_HOST );
     const list = ref([]);
     const get_list = () => {
-        const api = api_host.value + "/books";
-        const ajax = fetch(api).then(r=>r.json());
-        ajax.then( (response = { result: [] }) => {
+        GetBookList().then( (response = { result: [] }) => {
             list.value = response.result;
         });
     };

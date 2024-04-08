@@ -10,9 +10,7 @@ const routes = [
     { path: "/", component: HomeView },
 ]
 
-const router = createRouter({
+export default createRouter({
     history: createMemoryHistory(),
     routes,
 });
-
-export default router;

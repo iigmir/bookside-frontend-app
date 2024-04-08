@@ -8,6 +8,7 @@
                 v-bind:show-modal="modal_shown"
                 v-on:closed="close_modal"
             />
+            <router-link to="/about">About</router-link>
         </header>
         <table-item v-for="item in list" v-bind:key="item.id" v-bind="{ ...item }" />
     </main>
@@ -18,9 +19,11 @@ export default { name: "Home" };
 </script>
 
 <script setup>
+import { computed, ref } from "vue";
+import { RouterLink } from "vue-router";
+// Components
 import TableItem from "./Item.vue";
 import FormModal from "../../components/ModalForm.vue";
-import { computed, ref } from "vue";
 
 const ajax_modules = () => {
     const api_host = computed( () => import.meta.env.VITE_API_HOST );

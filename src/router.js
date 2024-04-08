@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 // Routes
 import HomeView from "./views/Home/index.vue";
 import BookView from "./views/Book/index.vue";
@@ -10,7 +10,12 @@ const routes = [
     { path: "/", component: HomeView },
 ]
 
+/**
+ * Fuck it.
+ * @see https://router.vuejs.org/guide/essentials/history-mode.html
+ * @see https://github.com/vuejs/vue-router/issues/2671
+ */
 export default createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory(),
     routes,
 });

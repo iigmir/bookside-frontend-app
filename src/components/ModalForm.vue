@@ -1,6 +1,6 @@
 <template>
     <form v-on:submit.prevent="submit">
-        <div class="ts-modal is-large" v-bind:class="{ 'is-visible': shown }">
+        <dialog class="ts-modal is-large" v-bind:open="shown">
             <div class="content">
                 <div class="ts-content">
                     <div class="ts-header ts-grid is-middle-aligned">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </dialog>
     </form>
 </template>
 
@@ -79,6 +79,9 @@ const submit = (e) => {
     ajax.then( (response) => {
         console.log(response);
         emits("closed");
+    }).catch( (e) => {
+        console.error(e);
+        
     });
     // const params = get_param(formdata);
     // console.log(params);

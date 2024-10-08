@@ -2,14 +2,20 @@
     <main id="home-page" class="ts-container">
         <header class="header">
             <h1>Books API</h1>
+            <div v-show="failed_animation" class="ts-notice is-negative">
+                <div class="title">失敗訊息</div>
+                <div class="content">{{ failed_message }}</div>
+            </div>
             <button class="ts-button" v-on:click="open_modal">Create book</button>
             <form-modal
                 method="POST"
                 v-bind:show-modal="modal_shown"
                 v-on:closed="close_modal"
             />
-            <router-link to="/about">About</router-link>
         </header>
+        <p>
+            <router-link to="/about">About</router-link>
+        </p>
         <table-item v-for="item in list" v-bind:key="item.id" v-bind="{ ...item }" />
     </main>
 </template>
@@ -19,7 +25,7 @@ export default { name: "Home" };
 </script>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 // APIs
 import { GetBookList } from "../../api/index";
@@ -29,14 +35,21 @@ import FormModal from "../../components/ModalForm.vue";
 
 const ajax_modules = () => {
     const list = ref([]);
+    const failed_message = ref(null);
     const get_list = () => {
         GetBookList().then( (response = { result: [] }) => {
             list.value = response.result;
+        }).catch( (e) => {
+            failed_message.value = e.message;
+            setTimeout(() => {
+                failed_message.value = null;
+            }, 3000);
         });
     };
-    return { list, get_list };
+    const failed_animation = computed( () => failed_message.value != null );
+    return { list, get_list, failed_message, failed_animation };
 };
-const { list, get_list } = ajax_modules();
+const { list, get_list, failed_message, failed_animation } = ajax_modules();
 
 const modal_modules = () => {
     const modal_shown = ref(false);
